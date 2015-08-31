@@ -1,20 +1,17 @@
-﻿'This file is part of Click2Mail Tool.
+﻿'This file is part of Click2Mail API Tool.
 '
 'Click2Mail is free software: you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
 'the Free Software Foundation, either version 3 of the License, or
 '(at your option) any later version.
 '
-'Click2Mail Tool is distributed in the hope that it will be useful,
+'Click2Mail API Tool is distributed in the hope that it will be useful,
 'but WITHOUT ANY WARRANTY; without even the implied warranty of
 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 'GNU General Public License for more details.
 '
 'You should have received a copy of the GNU General Public License
 'along with Click2Mail Too.  If not, see <http://www.gnu.org/licenses/>.
-
-
-
 
 Imports System.Text.RegularExpressions
 Imports System.Drawing
@@ -32,24 +29,6 @@ Imports System.Security.Cryptography
 Imports System.Runtime.InteropServices
 
 Public Class SetupStationaryFields
-    Shared is64BitProcess As Boolean = (IntPtr.Size = 8)
-    Shared is64BitOperatingSystem As Boolean = is64BitProcess OrElse InternalCheckIsWow64()
-    <DllImport("kernel32.dll", SetLastError:=True, CallingConvention:=CallingConvention.Winapi)> _
-    Private Shared Function IsWow64Process(<[In]> hProcess As IntPtr, <Out> ByRef wow64Process As Boolean) As <MarshalAs(UnmanagedType.Bool)> Boolean
-    End Function
-    Public Shared Function InternalCheckIsWow64() As Boolean
-        If (Environment.OSVersion.Version.Major = 5 AndAlso Environment.OSVersion.Version.Minor >= 1) OrElse Environment.OSVersion.Version.Major >= 6 Then
-            Using p As Process = Process.GetCurrentProcess()
-                Dim retVal As Boolean
-                If Not IsWow64Process(p.Handle, retVal) Then
-                    Return False
-                End If
-                Return True
-            End Using
-        Else
-            Return False
-        End If
-    End Function
     Private _xlsfilename As String = String.Empty
     Private _xtemplate As String = String.Empty
     Private _md As DateTime
@@ -67,6 +46,7 @@ Public Class SetupStationaryFields
     Private Keeplast As Boolean = False
     Private zoom As Decimal = 1.0
     Private ds As New DataSet("StationaryDataset")
+    Private ds1 As New DataSet("StationaryDataset")
     Private ww, hh, tt, ll As Decimal
     Dim mouseb As Boolean = False
     Private loadedbool As Boolean = False
@@ -1828,6 +1808,9 @@ Public ReadOnly Property CurrentTemplateFile As String
         startload()
     End Sub
     Private Sub startload()
+        Try
+
+        
         CurrentPage = 0
         _mode = 1
 
@@ -1845,7 +1828,11 @@ Public ReadOnly Property CurrentTemplateFile As String
 
         End If
         updatetest()
-        loadtemplate()
+            loadtemplate()
+        Catch ex As Exception
+            MsgBox("You must select a file")
+            Me.Close()
+        End Try
     End Sub
     Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
         Me.Close()
@@ -1897,7 +1884,7 @@ Public ReadOnly Property CurrentTemplateFile As String
     Public Sub verifysingledocument(ByVal ai As addressitem, filename As String, template As String, Optional ByVal startuploadwhendone As Boolean = False)
 
         _sourcefilename = filename
-        _CurrentTemplate = _path & template
+        _CurrentTemplate = _path & "\" & template
         _aiSingle = ai
         _startuploadwhendone = startuploadwhendone
         CurrentPage = 1
@@ -2288,7 +2275,7 @@ Public ReadOnly Property CurrentTemplateFile As String
                 Else
                     Dim y As MsgBoxResult = MsgBox("Are you sure you want to delete template: " & Me.lb_SavedTemplates.SelectedItem, MsgBoxStyle.YesNo)
                     If y = MsgBoxResult.Yes Then
-                        File.Delete(_path & Me.lb_SavedTemplates.SelectedItem & ".c2m")
+                        File.Delete(_path & "\" & Me.lb_SavedTemplates.SelectedItem & ".c2m")
                         MsgBox("Deleted")
                         updatefiles()
                     End If
@@ -2308,13 +2295,13 @@ Public ReadOnly Property CurrentTemplateFile As String
             If _CurrentTemplate = "" And _dtt.Rows(0)("x") = 0 Then
                 If Me.lb_SavedTemplates.Items.Count > 0 Then
 
-                    _CurrentTemplate = _path & Me.lb_SavedTemplates.SelectedItem & ".c2m"
+                    _CurrentTemplate = _path & "\" & Me.lb_SavedTemplates.SelectedItem & ".c2m"
                     loadtemplate()
                 End If
             ElseIf _CurrentTemplate <> Me.lb_SavedTemplates.SelectedItem Then
                 Dim y As MsgBoxResult = MsgBox("You have selected a new template, do you want to Load this?", MsgBoxStyle.YesNo)
                 If y = MsgBoxResult.Yes Then
-                    _CurrentTemplate = _path & Me.lb_SavedTemplates.SelectedItem & ".c2m"
+                    _CurrentTemplate = _path & "\" & Me.lb_SavedTemplates.SelectedItem & ".c2m"
                     loadtemplate()
                 End If
 
@@ -2368,7 +2355,7 @@ Public ReadOnly Property CurrentTemplateFile As String
         _dtt.Select("setting = true and fieldname = 'username'")(0)("misc") = frm.tb_username.Text
 
         _dtt.Select("setting = true and fieldname = 'password'")(0)("misc") = Encrypt(frm.tb_password.Text)
-        _dtt.Select("setting = true and fieldname = 'appSignature'")(0)("misc") = "Auto Mailer VSenese"
+        _dtt.Select("setting = true and fieldname = 'appSignature'")(0)("misc") = "SRC_AutoMailer VSenese"
         _dtt.Select("setting = true and fieldname = 'poDocumentClass'")(0)("misc") = frm.cb_documentclass.SelectedItem
 
         _dtt.Select("setting = true and fieldname = 'poLayout'")(0)("misc") = frm.cb_layout.SelectedItem
@@ -2389,9 +2376,18 @@ Public ReadOnly Property CurrentTemplateFile As String
         _dtt.Select("setting = true and fieldname = 'omitNonValidated'")(0)("misc") = frm.Chkbox_NonValidated.Checked
         _dtt.Select("setting = true and fieldname = 'omitNonStandardWarning'")(0)("misc") = frm.chk_OmitUSPSWarning.Checked
         _dtt.Select("setting = true and fieldname = 'testMode'")(0)("misc") = frm.chk_TEST.Checked
-        If _dtt.Select("setting = true and fieldname = 'templatePath'").Count > 0 Then
-            If _path = "" And _dtt.Select("setting = true and fieldname = 'templatePath'")(0)("misc") <> "" Then
-                _path = _dtt.Select("setting = true and fieldname = 'templatePath'")(0)("misc")
+
+        Dim mypath = "defaults.xml"
+        If System.IO.File.Exists(mypath) Then
+            Dim _dtt1 As DataTable
+            ds1.Clear()
+            ds1.ReadXml(mypath)
+            _dtt1 = ds1.Tables(0)
+            If _dtt1.Select("setting = true and fieldname = 'templatePath'").Count > 0 Then
+                If _dtt1.Select("setting = true and fieldname = 'templatePath'")(0)("misc") <> "" Then
+                    _path = _dtt1.Select("setting = true and fieldname = 'templatePath'")(0)("misc")
+                    updatefiles()
+                End If
             End If
         End If
         updatetest()
@@ -2424,7 +2420,7 @@ Public ReadOnly Property CurrentTemplateFile As String
             Return
         End If
 
-        Me._dtt.WriteXml(_path & s)
+        Me._dtt.WriteXml(_path & "\" & s)
         _CurrentTemplate = s
     End Sub
     Private Sub loadtemplate()
@@ -3073,7 +3069,7 @@ Public ReadOnly Property CurrentTemplateFile As String
         Try
 
 
-            Dim s() As String = System.IO.Directory.GetFiles(_path, text & "*.c2m")
+            Dim s() As String = System.IO.Directory.GetFiles(_path & "\", text & "*.c2m")
             Me.lb_SavedTemplates.Items.Clear()
             For Each ss In s
                 Dim f As New FileInfo(ss)
@@ -3193,14 +3189,11 @@ Public ReadOnly Property CurrentTemplateFile As String
     Public Sub templatemulti(filename As String, template As String, Optional ByVal startuploadwhendone As Boolean = False)
         _loadtype = loadtype.templatemulti
         _sourcefilename = filename
-        _CurrentTemplate = _path & template
+        _CurrentTemplate = _path & "\" & template
         _startuploadwhendone = startuploadwhendone
         CurrentPage = 1
     End Sub
     Private Sub SetupStationaryFields_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        If InternalCheckIsWow64() Then
-            ' Me.sDLLPath = sDLLPath64
-        End If
         If _hideform Then
             '  Me.Hide()
             loadtemplate()
