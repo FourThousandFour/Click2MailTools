@@ -7,6 +7,10 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Click2Mail", "Click2Mail\Cl
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Click2MailLauncher", "Click2MailLauncher\Click2MailLauncher.vbproj", "{6CC1A144-D574-4AD6-8709-6F43025246C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertedClick2Mail", "Click2MailCSharp\ConvertedClick2Mail.csproj", "{C6FACC9A-6622-43DD-BF20-0BE6C62DDA80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Click2MailLauncherCSharp", "Click2MailLauncherCSharp\Click2MailLauncherCSharp.csproj", "{C9271FAA-709B-4FE7-8C90-2F59B7E397DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{6CC1A144-D574-4AD6-8709-6F43025246C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CC1A144-D574-4AD6-8709-6F43025246C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CC1A144-D574-4AD6-8709-6F43025246C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6FACC9A-6622-43DD-BF20-0BE6C62DDA80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6FACC9A-6622-43DD-BF20-0BE6C62DDA80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6FACC9A-6622-43DD-BF20-0BE6C62DDA80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6FACC9A-6622-43DD-BF20-0BE6C62DDA80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9271FAA-709B-4FE7-8C90-2F59B7E397DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9271FAA-709B-4FE7-8C90-2F59B7E397DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9271FAA-709B-4FE7-8C90-2F59B7E397DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9271FAA-709B-4FE7-8C90-2F59B7E397DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
