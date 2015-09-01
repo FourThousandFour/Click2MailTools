@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Click2Mail.dll" size="154624">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Click2Mail.dll" size="154112">
       <assemblyIdentity name="Click2Mail" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>ZwatBdxxjTFvayeA5wOR9KzrUx0=</dsig:DigestValue>
+        <dsig:DigestValue>MP4RYYBwWKuxw31Mh3A3WDH3KcU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>yhQET6a4aofAQM27oXQ6E+yeq3Y=</dsig:DigestValue>
+        <dsig:DigestValue>HQ7BrfYMol2w6j5V5HlaNfYDjqU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
