@@ -1038,6 +1038,223 @@ Public Class SetupStationaryFields
         recipients.AppendChild(address)
         Return True
     End Function
+    Private Function parseaddresssingle_GeneratedPDF(ByRef ai As addressitem, ByRef BatchNode As XmlNode) As Boolean
+        Dim startpage As Integer = 1
+
+
+        'Validate Text
+
+
+        'It is a first page, but now lets see if there is a valid address
+        'If address1 validates
+        '
+
+        If BatchNode Is Nothing Then
+
+
+            XMLDOC = New System.Xml.XmlDocument
+            Dim docNode As System.Xml.XmlNode = XMLDOC.CreateXmlDeclaration("1.0", "UTF-8", Nothing)
+            XMLDOC.AppendChild(docNode)
+            BatchNode = XMLDOC.CreateElement("batch")
+            Dim ns As System.Xml.XmlNode
+            ns = XMLDOC.CreateAttribute("xmlns", "xsi", "http://www.w3.org/2000/xmlns/")
+            ns.Value = "http://www.w3.org/2001/XMLSchema-instance"
+            BatchNode.Attributes.Append(ns)
+            XMLDOC.AppendChild(BatchNode)
+
+            Dim un As Xml.XmlNode = XMLDOC.CreateElement("username")
+            BatchNode.AppendChild(un)
+            un.InnerText = _dtt.Select("setting = true and fieldname = 'username'")(0)("misc")
+
+            Dim pw As Xml.XmlNode = XMLDOC.CreateElement("password")
+            pw.InnerText = Decrypt(_dtt.Select("setting = true and fieldname = 'password'")(0)("misc"))
+            BatchNode.AppendChild(pw)
+            Dim fn As Xml.XmlNode = XMLDOC.CreateElement("filename")
+            fn.InnerText = _sourcefilename
+            BatchNode.AppendChild(fn)
+            Dim as1 As Xml.XmlNode = XMLDOC.CreateElement("appSignature")
+            BatchNode.AppendChild(as1)
+            as1.InnerText = _dtt.Select("setting = true and fieldname = 'appSignature'")(0)("misc")
+        End If
+
+        ' ai = New addressitem
+
+        
+
+
+
+        Dim job As Xml.XmlNode = XMLDOC.CreateElement("job")
+        BatchNode.AppendChild(job)
+
+        Dim startingpage As Xml.XmlNode = XMLDOC.CreateElement("startingPage")
+        job.AppendChild(startingpage)
+        startingpage.InnerText = ai.startpage
+        Dim endpage As Xml.XmlNode = XMLDOC.CreateElement("endingPage")
+        endpage.InnerText = ai.endpage
+        job.AppendChild(endpage)
+
+
+        Dim printProductionOptions As Xml.XmlNode = XMLDOC.CreateElement("printProductionOptions")
+        job.AppendChild(printProductionOptions)
+        Dim docclass As Xml.XmlNode = XMLDOC.CreateElement("documentClass")
+        docclass.InnerText = _dtt.Select("setting = true and fieldname = 'poDocumentClass'")(0)("misc")
+        printProductionOptions.AppendChild(docclass)
+
+        Dim layout As Xml.XmlNode = XMLDOC.CreateElement("layout")
+        layout.InnerText = _dtt.Select("setting = true and fieldname = 'poLayout'")(0)("misc")
+        printProductionOptions.AppendChild(layout)
+
+        Dim productiontime As Xml.XmlNode = XMLDOC.CreateElement("productionTime")
+        productiontime.InnerText = _dtt.Select("setting = true and fieldname = 'poProductionTime'")(0)("misc")
+        printProductionOptions.AppendChild(productiontime)
+
+        Dim envelope As Xml.XmlNode = XMLDOC.CreateElement("envelope")
+        envelope.InnerText = _dtt.Select("setting = true and fieldname = 'poEnvelope'")(0)("misc")
+
+        If "Printing One side" = _dtt.Select("setting = true and fieldname = 'poPrintOption'")(0)("misc") Then
+            If (ai.endpage - ai.startpage) + 1 > 5 Then
+                envelope.InnerText = oversized
+            End If
+
+        Else
+            If (ai.endpage - ai.startpage) + 1 > 10 Then
+                envelope.InnerText = oversized
+            End If
+
+        End If
+
+        printProductionOptions.AppendChild(envelope)
+
+        Dim color As Xml.XmlNode = XMLDOC.CreateElement("color")
+        color.InnerText = _dtt.Select("setting = true and fieldname = 'poColor'")(0)("misc")
+        printProductionOptions.AppendChild(color)
+
+        Dim papertype As Xml.XmlNode = XMLDOC.CreateElement("paperType")
+        papertype.InnerText = _dtt.Select("setting = true and fieldname = 'poPaperType'")(0)("misc")
+        printProductionOptions.AppendChild(papertype)
+
+
+        Dim printoption As Xml.XmlNode = XMLDOC.CreateElement("printOption")
+        printoption.InnerText = _dtt.Select("setting = true and fieldname = 'poPrintOption'")(0)("misc")
+        printProductionOptions.AppendChild(printoption)
+
+        Dim mailclass As Xml.XmlNode = XMLDOC.CreateElement("mailClass")
+        mailclass.InnerText = _dtt.Select("setting = true and fieldname = 'poMailClass'")(0)("misc")
+        printProductionOptions.AppendChild(mailclass)
+
+
+        If Not _dtt.Select("setting = true and fieldname = 'raName'")(0)("misc") = "" Or Not _dtt.Select("setting = true and fieldname = 'raOrganization'")(0)("misc") = "" Then
+            Dim returnAddress As Xml.XmlNode = XMLDOC.CreateElement("returnAddress")
+            job.AppendChild(returnAddress)
+
+            Dim raname As Xml.XmlNode = XMLDOC.CreateElement("name")
+            raname.InnerText = _dtt.Select("setting = true and fieldname = 'raName'")(0)("misc")
+            returnAddress.AppendChild(raname)
+
+            Dim raorg As Xml.XmlNode = XMLDOC.CreateElement("organization")
+            raorg.InnerText = _dtt.Select("setting = true and fieldname = 'raOrganization'")(0)("misc")
+            returnAddress.AppendChild(raorg)
+
+
+            Dim raaddress1 As Xml.XmlNode = XMLDOC.CreateElement("address1")
+            raaddress1.InnerText = _dtt.Select("setting = true and fieldname = 'raAddress1'")(0)("misc")
+            returnAddress.AppendChild(raaddress1)
+
+            Dim raaddress2 As Xml.XmlNode = XMLDOC.CreateElement("address2")
+            raaddress2.InnerText = _dtt.Select("setting = true and fieldname = 'raAddress2'")(0)("misc")
+            returnAddress.AppendChild(raaddress2)
+
+            Dim racity As Xml.XmlNode = XMLDOC.CreateElement("city")
+            racity.InnerText = _dtt.Select("setting = true and fieldname = 'raCity'")(0)("misc")
+            returnAddress.AppendChild(racity)
+
+            Dim rastate As Xml.XmlNode = XMLDOC.CreateElement("state")
+            rastate.InnerText = _dtt.Select("setting = true and fieldname = 'raState'")(0)("misc")
+            returnAddress.AppendChild(rastate)
+
+            Dim rapost As Xml.XmlNode = XMLDOC.CreateElement("postalCode")
+            rapost.InnerText = _dtt.Select("setting = true and fieldname = 'raPostalCode'")(0)("misc")
+            returnAddress.AppendChild(rapost)
+        End If
+
+
+
+
+        Dim recipients As Xml.XmlNode = XMLDOC.CreateElement("recipients")
+        job.AppendChild(recipients)
+
+
+        'VARIABLES TO HOLD INDIVIDUAL PARTS
+
+
+
+        'SHOW RESULT
+        '  MessageBox.Show("Name: " & AddressName)
+        'MessageBox.Show("Address1: " & Address1)
+        'MessageBox.Show("Address2: " & Address2)
+        'MessageBox.Show("Address3: " & Address3)
+        'MessageBox.Show("City: " & City)
+        'MessageBox.Show("State: " & State)
+        'MessageBox.Show("Zip: " & Zip)
+
+
+
+        Dim address As Xml.XmlNode = XMLDOC.CreateElement("address")
+
+        Dim xname As Xml.XmlNode = Nothing
+        Dim xorginization As Xml.XmlNode = Nothing
+        Dim xAddress1 As Xml.XmlNode = Nothing
+        Dim xAddress2 As Xml.XmlNode = Nothing
+        Dim xAddress3 As Xml.XmlNode = Nothing
+        Dim xCity As Xml.XmlNode = Nothing
+        Dim xState As Xml.XmlNode = Nothing
+        Dim xZip As Xml.XmlNode = Nothing
+        Dim xcountry As Xml.XmlNode = Nothing
+
+
+        ' Private _nName As String
+        '        Private _norganization As String
+        'Private _nAddress3 As String 'This is not used except for single item
+        '        Private _Address1 As String
+        'Private _Address2 As String
+        '       Private _City As String
+        '      Private _State As String
+        '     Private _Zip5 As String
+        '    Private _Zip4 As String
+
+        xname = XMLDOC.CreateElement("name")
+        xname.InnerText = ai.nname
+        xorginization = XMLDOC.CreateElement("organization")
+        xorginization.InnerText = ai.norganization
+        xAddress1 = XMLDOC.CreateElement("address1")
+        xAddress1.InnerText = Trim(ai.Address1)
+        xAddress2 = XMLDOC.CreateElement("address2")
+        xAddress2.InnerText = Trim(ai.Address2)
+        xAddress3 = XMLDOC.CreateElement("address3")
+        xAddress3.InnerText = Trim(ai.nAddress3)
+        xCity = XMLDOC.CreateElement("city")
+        xCity.InnerText = Trim(ai.city)
+        xState = XMLDOC.CreateElement("state")
+        xState.InnerText = Trim(ai.state)
+        xZip = XMLDOC.CreateElement("postalCode")
+        xZip.InnerText = Trim(ai.zip5 & "-" & ai.zip4)
+        xcountry = XMLDOC.CreateElement("country")
+
+
+
+        address.AppendChild(xname)
+        address.AppendChild(xorginization)
+
+        address.AppendChild(xAddress1)
+        address.AppendChild(xAddress2)
+        address.AppendChild(xAddress3)
+        address.AppendChild(xCity)
+        address.AppendChild(xState)
+        address.AppendChild(xZip)
+        address.AppendChild(xcountry)
+        recipients.AppendChild(address)
+        Return True
+    End Function
     Private Function parseaddresssingle(ByRef ai As addressitem, totalpages As Integer) As Boolean
         Dim startpage As Integer = 1
         Dim batchnode As XmlNode
@@ -2829,7 +3046,7 @@ Public Class SetupStationaryFields
             End Set
         End Property
     End Class
-    Private Class addresscollection
+    Public Class addresscollection
 
         Inherits CollectionBase
         Public Function Add(ByVal value As addressitem) As Integer
@@ -3040,7 +3257,34 @@ Public Class SetupStationaryFields
             If y = MsgBoxResult.No Then
                 Return
             End If
+            If File.Exists("tmp.pdf") Then
+                Try
+                    File.Delete("tmp.pdf")
+                Catch ex As Exception
+                    MsgBox("Please Close file and try again")
+                    Exit Sub
+                End Try
+
+            End If
+            Dim aic1 As addresscollection = Me.DataGridView2.DataSource
+            utils.Merge(_sourcefilename, "tmp.pdf", aic1)
+            Dim batchnode As XmlNode = Nothing
+
+            For Each ai As addressitem In aic1
+                If Not ai.ommitted Then
+                    parseaddresssingle_GeneratedPDF(ai, batchnode)
+                End If
+            Next
+
+            _sourcefilename = "tmp.pdf"
+
+            Invoke(New updatedatagrid(AddressOf updatedatagridonMail), New Object() {aic1})
+            'Invoke(New updatecomplete(AddressOf updatecompleted), New Object() {})
+            'Process.Start("tmp.pdf")
+
             startupload()
+            loadpdf(_sourcefilename)
+
         Else
 
 
@@ -3069,6 +3313,7 @@ Public Class SetupStationaryFields
             mode = frm_clicktomail.mode.live
         End If
         sentXML = XMLDOC.OuterXml
+        Console.Write(sentXML)
         Dim x As New frm_clicktomail(XMLDOC, _sourcefilename, mode, _dtt.Select("setting = true and fieldname = 'username'")(0)("misc"), Decrypt(_dtt.Select("setting = true and fieldname = 'password'")(0)("misc")), Me)
         x.keepopen = keepopen
         x.Show()

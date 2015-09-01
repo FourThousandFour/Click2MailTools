@@ -451,7 +451,232 @@ namespace ConvertedClick2Mail
         }
 		#endregion
 		#region "ParseAddresses"
-        
+        private bool parseaddresssingle_GeneratedPDF(ref addressitem ai, ref XmlNode BatchNode)
+        {
+            int startpage = 1;
+
+
+            //Validate Text
+
+
+            //It is a first page, but now lets see if there is a valid address
+            //If address1 validates
+            //
+
+
+            if (BatchNode == null)
+            {
+
+                XMLDOC = new System.Xml.XmlDocument();
+                System.Xml.XmlNode docNode = XMLDOC.CreateXmlDeclaration("1.0", "UTF-8", null);
+                XMLDOC.AppendChild(docNode);
+                BatchNode = XMLDOC.CreateElement("batch");
+                System.Xml.XmlNode ns = null;
+                ns = XMLDOC.CreateAttribute("xmlns", "xsi", "http://www.w3.org/2000/xmlns/");
+                ns.Value = "http://www.w3.org/2001/XMLSchema-instance";
+                //BatchNode.Attributes.Append(ns);
+                XMLDOC.AppendChild(BatchNode);
+
+                System.Xml.XmlNode un = XMLDOC.CreateElement("username");
+                BatchNode.AppendChild(un);
+                un.InnerText = (string) _dtt.Select("setting = true and fieldname = 'username'")[0]["misc"];
+
+                System.Xml.XmlNode pw = XMLDOC.CreateElement("password");
+                pw.InnerText = Decrypt((string) _dtt.Select("setting = true and fieldname = 'password'")[0]["misc"]);
+                BatchNode.AppendChild(pw);
+                System.Xml.XmlNode fn = XMLDOC.CreateElement("filename");
+                fn.InnerText = _sourcefilename;
+                BatchNode.AppendChild(fn);
+                System.Xml.XmlNode as1 = XMLDOC.CreateElement("appSignature");
+                BatchNode.AppendChild(as1);
+                as1.InnerText = (string) _dtt.Select("setting = true and fieldname = 'appSignature'")[0]["misc"];
+            }
+
+            // ai = New addressitem
+
+
+
+
+
+            System.Xml.XmlNode job = XMLDOC.CreateElement("job");
+            BatchNode.AppendChild(job);
+
+            System.Xml.XmlNode startingpage = XMLDOC.CreateElement("startingPage");
+            job.AppendChild(startingpage);
+            startingpage.InnerText = Convert.ToString( ai.startpage);
+            System.Xml.XmlNode endpage = XMLDOC.CreateElement("endingPage");
+            endpage.InnerText = Convert.ToString(ai.endpage);
+            job.AppendChild(endpage);
+
+
+            System.Xml.XmlNode printProductionOptions = XMLDOC.CreateElement("printProductionOptions");
+            job.AppendChild(printProductionOptions);
+            System.Xml.XmlNode docclass = XMLDOC.CreateElement("documentClass");
+            docclass.InnerText = (string) _dtt.Select("setting = true and fieldname = 'poDocumentClass'")[0]["misc"];
+            printProductionOptions.AppendChild(docclass);
+
+            System.Xml.XmlNode layout = XMLDOC.CreateElement("layout");
+            layout.InnerText = (string) _dtt.Select("setting = true and fieldname = 'poLayout'")[0]["misc"];
+            printProductionOptions.AppendChild(layout);
+
+            System.Xml.XmlNode productiontime = XMLDOC.CreateElement("productionTime");
+            productiontime.InnerText = (string) _dtt.Select("setting = true and fieldname = 'poProductionTime'")[0]["misc"];
+            printProductionOptions.AppendChild(productiontime);
+
+            System.Xml.XmlNode envelope = XMLDOC.CreateElement("envelope");
+            envelope.InnerText = (string) _dtt.Select("setting = true and fieldname = 'poEnvelope'")[0]["misc"];
+
+            if ("Printing One side" == (string) _dtt.Select("setting = true and fieldname = 'poPrintOption'")[0]["misc"])
+            {
+                if ((ai.endpage - ai.startpage) + 1 > 5)
+                {
+                    envelope.InnerText = oversized;
+                }
+
+            }
+            else
+            {
+                if ((ai.endpage - ai.startpage) + 1 > 10)
+                {
+                    envelope.InnerText = oversized;
+                }
+
+            }
+
+            printProductionOptions.AppendChild(envelope);
+
+            System.Xml.XmlNode color = XMLDOC.CreateElement("color");
+            color.InnerText = (string)_dtt.Select("setting = true and fieldname = 'poColor'")[0]["misc"];
+            printProductionOptions.AppendChild(color);
+
+            System.Xml.XmlNode papertype = XMLDOC.CreateElement("paperType");
+            papertype.InnerText = (string)_dtt.Select("setting = true and fieldname = 'poPaperType'")[0]["misc"];
+            printProductionOptions.AppendChild(papertype);
+
+
+            System.Xml.XmlNode printoption = XMLDOC.CreateElement("printOption");
+            printoption.InnerText = (string)_dtt.Select("setting = true and fieldname = 'poPrintOption'")[0]["misc"];
+            printProductionOptions.AppendChild(printoption);
+
+            System.Xml.XmlNode mailclass = XMLDOC.CreateElement("mailClass");
+            mailclass.InnerText = (string)_dtt.Select("setting = true and fieldname = 'poMailClass'")[0]["misc"];
+            printProductionOptions.AppendChild(mailclass);
+
+
+            if (!string.IsNullOrEmpty((string)_dtt.Select("setting = true and fieldname = 'raName'")[0]["misc"]) | !string.IsNullOrEmpty((string)_dtt.Select("setting = true and fieldname = 'raOrganization'")[0]["misc"]))
+            {
+                System.Xml.XmlNode returnAddress = XMLDOC.CreateElement("returnAddress");
+                job.AppendChild(returnAddress);
+
+                System.Xml.XmlNode raname = XMLDOC.CreateElement("name");
+                raname.InnerText = (string)_dtt.Select("setting = true and fieldname = 'raName'")[0]["misc"];
+                returnAddress.AppendChild(raname);
+
+                System.Xml.XmlNode raorg = XMLDOC.CreateElement("organization");
+                raorg.InnerText = (string)_dtt.Select("setting = true and fieldname = 'raOrganization'")[0]["misc"];
+                returnAddress.AppendChild(raorg);
+
+
+                System.Xml.XmlNode raaddress1 = XMLDOC.CreateElement("address1");
+                raaddress1.InnerText = (string)_dtt.Select("setting = true and fieldname = 'raAddress1'")[0]["misc"];
+                returnAddress.AppendChild(raaddress1);
+
+                System.Xml.XmlNode raaddress2 = XMLDOC.CreateElement("address2");
+                raaddress2.InnerText = (string)_dtt.Select("setting = true and fieldname = 'raAddress2'")[0]["misc"];
+                returnAddress.AppendChild(raaddress2);
+
+                System.Xml.XmlNode racity = XMLDOC.CreateElement("city");
+                racity.InnerText = (string)_dtt.Select("setting = true and fieldname = 'raCity'")[0]["misc"];
+                returnAddress.AppendChild(racity);
+
+                System.Xml.XmlNode rastate = XMLDOC.CreateElement("state");
+                rastate.InnerText = (string)_dtt.Select("setting = true and fieldname = 'raState'")[0]["misc"];
+                returnAddress.AppendChild(rastate);
+
+                System.Xml.XmlNode rapost = XMLDOC.CreateElement("postalCode");
+                rapost.InnerText = (string)_dtt.Select("setting = true and fieldname = 'raPostalCode'")[0]["misc"];
+                returnAddress.AppendChild(rapost);
+            }
+
+
+
+
+            System.Xml.XmlNode recipients = XMLDOC.CreateElement("recipients");
+            job.AppendChild(recipients);
+
+
+            //VARIABLES TO HOLD INDIVIDUAL PARTS
+
+
+
+            //SHOW RESULT
+            //  MessageBox.Show("Name: " & AddressName)
+            //MessageBox.Show("Address1: " & Address1)
+            //MessageBox.Show("Address2: " & Address2)
+            //MessageBox.Show("Address3: " & Address3)
+            //MessageBox.Show("City: " & City)
+            //MessageBox.Show("State: " & State)
+            //MessageBox.Show("Zip: " & Zip)
+
+
+
+            System.Xml.XmlNode address = XMLDOC.CreateElement("address");
+
+            System.Xml.XmlNode xname = null;
+            System.Xml.XmlNode xorginization = null;
+            System.Xml.XmlNode xAddress1 = null;
+            System.Xml.XmlNode xAddress2 = null;
+            System.Xml.XmlNode xAddress3 = null;
+            System.Xml.XmlNode xCity = null;
+            System.Xml.XmlNode xState = null;
+            System.Xml.XmlNode xZip = null;
+            System.Xml.XmlNode xcountry = null;
+
+
+            // Private _nName As String
+            //        Private _norganization As String
+            //Private _nAddress3 As String 'This is not used except for single item
+            //        Private _Address1 As String
+            //Private _Address2 As String
+            //       Private _City As String
+            //      Private _State As String
+            //     Private _Zip5 As String
+            //    Private _Zip4 As String
+
+            xname = XMLDOC.CreateElement("name");
+            xname.InnerText = ai.nname;
+            xorginization = XMLDOC.CreateElement("organization");
+            xorginization.InnerText = ai.norganization;
+            xAddress1 = XMLDOC.CreateElement("address1");
+            xAddress1.InnerText = Strings.Trim(ai.Address1);
+            xAddress2 = XMLDOC.CreateElement("address2");
+            xAddress2.InnerText = Strings.Trim(ai.Address2);
+            xAddress3 = XMLDOC.CreateElement("address3");
+            xAddress3.InnerText = Strings.Trim(ai.nAddress3);
+            xCity = XMLDOC.CreateElement("city");
+            xCity.InnerText = Strings.Trim(ai.city);
+            xState = XMLDOC.CreateElement("state");
+            xState.InnerText = Strings.Trim(ai.state);
+            xZip = XMLDOC.CreateElement("postalCode");
+            xZip.InnerText = Strings.Trim(ai.zip5 + "-" + ai.zip4);
+            xcountry = XMLDOC.CreateElement("country");
+
+
+
+            address.AppendChild(xname);
+            address.AppendChild(xorginization);
+
+            address.AppendChild(xAddress1);
+            address.AppendChild(xAddress2);
+            address.AppendChild(xAddress3);
+            address.AppendChild(xCity);
+            address.AppendChild(xState);
+            address.AppendChild(xZip);
+            address.AppendChild(xcountry);
+            recipients.AppendChild(address);
+            return true;
+        }
+
 		private bool parseaddress(string s, string validatetext, ref System.Xml.XmlNode batchnode, int startpage, ref System.Xml.XmlNode endpage, ref System.Xml.XmlNode envelope, ref System.Xml.XmlNode startingpage, ref addressitem ai)
 		{
 
@@ -1765,22 +1990,22 @@ namespace ConvertedClick2Mail
         {
             DataGridView gr;
             gr = (DataGridView) sender;
-            switch (e.ColumnIndex)
-            {
-                case  // ERROR: Case labels with binary operators are unsupported : GreaterThan
-            -1:
-                    addressitem v1 = default(addressitem);
+               addressitem v1 = default(addressitem);
 
-                    v1 = (addressitem) gr.CurrentRow.DataBoundItem;
+               if (gr.CurrentRow.DataBoundItem != null)
+               {
+                   v1 = (addressitem)gr.CurrentRow.DataBoundItem;
 
 
-                    CurrentPage = v1.startpage - 1;
-                    System.Drawing.Image img = getImageFromFile(_sourcefilename, CurrentPage, 72);
-                    bimg = new Bitmap(img, PictureBox1.Width, PictureBox1.Height);
-                    this.PictureBox1.Image = bimg;
-                    setpage();
-                    break;
-            }
+                   CurrentPage = v1.startpage - 1;
+                   System.Drawing.Image img = getImageFromFile(_sourcefilename, CurrentPage, 72);
+                   bimg = new Bitmap(img, PictureBox1.Width, PictureBox1.Height);
+                   this.PictureBox1.Image = bimg;
+                   setpage();
+               }
+
+                   
+                        
         }
 
 		private void NextPage()
@@ -1805,7 +2030,7 @@ namespace ConvertedClick2Mail
 			} else {
 				this.Button4.Enabled = true;
 			}
-			this.lbl_pages.Text = "Page " + CurrentPage + 1 + " of " + rasterizer.PageCount;
+			this.lbl_pages.Text = "Page " + (CurrentPage + 1) + " of " + rasterizer.PageCount;
 		}
 		private void PriorPage()
 		{
@@ -2957,7 +3182,7 @@ namespace ConvertedClick2Mail
 			}
 		}
 
-		private class addresscollection : CollectionBase
+		public class addresscollection : CollectionBase
 		{
 			public int Add(addressitem value)
 			{
@@ -3182,7 +3407,44 @@ namespace ConvertedClick2Mail
                 {
                     return;
                 }
+                if (File.Exists("tmp.pdf"))
+                {
+                    try
+                    {
+                        File.Delete("tmp.pdf");
+                    }
+                    catch (Exception ex)
+                    {
+                        Interaction.MsgBox("Please Close file and try again");
+                        return;
+                    }
+
+                }
+                addresscollection aic1 = (addresscollection) this.DataGridView2.DataSource;
+                addresscollection aic2 = new addresscollection();
+                Utils.Merge(_sourcefilename, (string)"tmp.pdf", ref aic1);
+                
+                XmlNode batchnode = null;
+
+                foreach (addressitem ai in aic1)
+                {
+                    addressitem ai1 = ai;
+                    if (!ai.ommitted)
+                    {
+                        parseaddresssingle_GeneratedPDF(ref ai1, ref batchnode);
+                    }
+                    aic2.Add(ai1);
+                }
+
+                _sourcefilename = "tmp.pdf";
+
+                Invoke(new updatedatagrid(updatedatagridonMail), new object[] { aic2 });
+                //Invoke(New updatecomplete(AddressOf updatecompleted), New Object() {})
+                //Process.Start("tmp.pdf")
+
                 startupload();
+                loadpdf(_sourcefilename);
+
 
             }
             else
@@ -3210,6 +3472,7 @@ namespace ConvertedClick2Mail
                     }
                 }
             }
+
         }
 
 
@@ -3223,6 +3486,7 @@ namespace ConvertedClick2Mail
 				//mode = frm_clicktomail.mode.live;
 			}
 			sentXML = XMLDOC.OuterXml;
+            Console.Write(sentXML);
 			frm_Click2Mail  x = new frm_Click2Mail(XMLDOC, _sourcefilename, mode, (string) _dtt.Select("setting = true and fieldname = 'username'")[0]["misc"], Decrypt((string) _dtt.Select("setting = true and fieldname = 'password'")[0]["misc"]), this);
             x.keepopen = this.keepopen;
 			x.Show();

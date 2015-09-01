@@ -21,6 +21,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Configuration;
+using System.Collections.Generic;
+using System.IO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+
+
 
 namespace ConvertedClick2Mail
 {
@@ -30,5 +38,54 @@ namespace ConvertedClick2Mail
         {
             return str.Substring(0, Math.Min(length, str.Length));
         }
+        public static void Merge(string file, string OutFile, ref SetupStationaryFields.addresscollection aic)
+        {
+            using (FileStream stream = new FileStream(OutFile, FileMode.Create))
+            {
+                using (Document doc = new Document())
+                {
+                    using (PdfCopy pdf = new PdfCopy(doc, stream))
+                    {
+                        doc.Open();
+
+                        PdfReader reader = null;
+                        PdfImportedPage page = null;
+
+                        //fixed typo
+                        int ii = 0;
+                        int count = 0;
+
+                        foreach (SetupStationaryFields.addressitem ai in aic)
+                        {
+
+                            if ((!ai.ommitted))
+                            {
+
+                                reader = new PdfReader(file);
+                                PdfReader.unethicalreading = true;
+                                count = reader.NumberOfPages;
+                                for (int i = 0; i <= reader.NumberOfPages - 1; i++)
+                                {
+                                    page = pdf.GetImportedPage(reader, i + 1);
+                                    pdf.AddPage(page);
+                                }
+
+                                pdf.FreeReader(reader);
+                                reader.Close();
+
+
+
+                                ai.startpage = ((ii) * count) + 1;
+                                ai.endpage = (ii * count) + count;
+                                ii = ii + 1;
+
+                            }
+                        }
+                    }
+                }
+                stream.Close();
+            }
+        }
+
     }
 }
