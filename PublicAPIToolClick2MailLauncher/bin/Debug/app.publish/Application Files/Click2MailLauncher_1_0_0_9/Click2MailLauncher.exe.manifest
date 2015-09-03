@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="Click2MailLauncher.exe" version="1.0.0.9" publicKeyToken="421e15d93ab5de0e" language="neutral" processorArchitecture="x86" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="Click2MailLauncher" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
+    <commandLine file="Click2MailLauncher.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Click2Mail.dll" size="151040">
+      <assemblyIdentity name="Click2Mail" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>U31S84/ve+gdwi2yJedC+f/aGGc=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Click2MailLauncher.exe" size="30208">
+      <assemblyIdentity name="Click2MailLauncher" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>Sc2JO+ZDWTmnffYyUIoFnSxjQLQ=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Ghostscript.NET.dll" size="97280">
+      <assemblyIdentity name="Ghostscript.NET" version="1.2.0.0" publicKeyToken="F85051DE34525B59" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>Z/0jeezIgeVBEhPPcGKOcDAPg+4=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="itextsharp.dll" size="3846144">
+      <assemblyIdentity name="itextsharp" version="5.1.3.0" publicKeyToken="8354AE6D2174DDCA" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>hUCIv/Mi0mbVb4hfj8dg3lfcfr8=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="Click2MailLauncher.exe.config" size="183">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>zmtMKrAEuvsQh2jJFtlCNruBIWE=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="gsdll32.dll" size="13139968">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>FfMiVKIfGrcnZZJwoLf3UMtPVb0=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="gsdll64.dll" size="14789120">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>JBHKHb3dFcGYukkrh2LzQMvwHiY=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=NPWULOCAL\Vinnie881" issuerKeyHash="806ab77dca2e912b941b168154aff6f15a9a6ffc" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>T/oyEWFNi0X2CHRA/rHzbvE7lvA=</DigestValue></Reference></SignedInfo><SignatureValue>dWzdSvitAuWkCSV2iSSAF413qQvSZFdiGyam2/CyfrkISmX47dEySw/GmOEKF6s/tKkKWTQGWQhDTrxm7kKNqu+yW6u80tNOf3m/GMrM+qT1KhZSL+JCwpEUW+Gp5MYx0ZV9aQbdKPnq6lPKsrc51EqKLA3AcmAaUUJL19DgdZo=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>qo3V121gJti5gXKy27lt0ltThrl1ksHWGlULAMZhOqB9iJfZgekDnvMgGjIzxN/UMY2fXjNY9Nt4FjCekzMRk60j89hvRBBqaIAVQhTT1VwXauR1ts6N5kACiovlOJ/MEP8VDswAViuuVA/WytBuKF8gHtHxrjrhqiP/aVEZ9Ns=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="f0963bf16ef3b1fe407408f6458b4d611132fa4f" Description="" Url=""><as:assemblyIdentity name="Click2MailLauncher.exe" version="1.0.0.9" publicKeyToken="421e15d93ab5de0e" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=NPWULOCAL\Vinnie881</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>3osV9BQEfia/7jc+/kQegg+xb0k=</DigestValue></Reference></SignedInfo><SignatureValue>IOLtq42GXo9o9rbtQy2H//L4Lte20q2li9KFM/80hZK3e5uGnJhz3dJnIxOWLoG5id/ETcuqU/6fqZ7Q7Hks3FfgL1WWcClZaq6zP7Jv1fU+EgPcjAzAvpumM3vrusBUxb/bqdnioVWCUkY8u9/UBNvXiAQzV0Y3uUTr7bHg0FE=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>qo3V121gJti5gXKy27lt0ltThrl1ksHWGlULAMZhOqB9iJfZgekDnvMgGjIzxN/UMY2fXjNY9Nt4FjCekzMRk60j89hvRBBqaIAVQhTT1VwXauR1ts6N5kACiovlOJ/MEP8VDswAViuuVA/WytBuKF8gHtHxrjrhqiP/aVEZ9Ns=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB5TCCAU6gAwIBAgIQHnz/eL1zVoxFVeoq1WcFcDANBgkqhkiG9w0BAQUFADAxMS8wLQYDVQQDHiYATgBQAFcAVQBMAE8AQwBBAEwAXABWAGkAbgBuAGkAZQA4ADgAMTAeFw0xNTA4MjUxOTQxMzlaFw0xNjA4MjUwMTQxMzlaMDExLzAtBgNVBAMeJgBOAFAAVwBVAEwATwBDAEEATABcAFYAaQBuAG4AaQBlADgAOAAxMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCqjdXXbWAm2LmBcrLbuW3SW1OGuXWSwdYaVQsAxmE6oH2Il9mB6QOe8yAaMjPE39QxjZ9eM1j023gWMJ6TMxGTrSPz2G9EEGpogBVCFNPVXBdq5HW2zo3mQAKKi+U4n8wQ/xUOzABWK65UD9bK0G4oXyAe0fGuOuGqI/9pURn02wIDAQABMA0GCSqGSIb3DQEBBQUAA4GBACbkHj18B69SuPkZSPKZabi8nB4zkI9Uu3ELunse/YcDTavwc5MxDEXEngrZiAgD0i40iSGQrp5YrpcGEzaHi45qLFXWqolYZHw/5b4ut431ucoaZIghD71PCuAsnAZGZV3egrpia+beY7yse6+ZaRnC2yhkUpTGt6peC5sY4Jek</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
