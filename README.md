@@ -15,6 +15,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Click2Mail Too.  If not, see <http://www.gnu.org/licenses/>.
 
+To familiarize yourself with the app, please see.
+
+https://www.youtube.com/watch?v=S206naBlzd0
+
+CLICKONCE INSTALLER http://s2.npwu.com/git/publish.htm
 
 The Public API Tool for Click2Mail? (PATC) is a free, open source application and software toolkit created specifically for clients of Click2Mail. The PATC was developed to enable speedy parsing and mailing of PDFs. Specifically, multi-recipient PDFs which can contain multiple, variable length documents combined in a single PDF with dynamic page content. The tool also automates the mailing of a single PDF document to multiple recipients on an Excel list.
 Intended for non-technical users as well as developers, PATC is both a standalone interface and a .NET library. PATC streamlines and fully automates the Click2Mail submission process for business documents such as invoices, statements of account, newsletters and other documents generated from standard reporting tools such as Crystal Reports and SSRS. Developers can use the library as a .net plug in and build all the PATC features into a CRM or other .net solution to automate almost any type of mailer. When integrated into an existing solution, no user intervention beyond a button click is typically required.
